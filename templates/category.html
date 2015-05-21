@@ -1,0 +1,55 @@
+<ion-view>
+	<ion-nav-title> 
+	    <h1 class="title">{{category.name}}
+	        <a ng-if="toggle">
+	            Archive
+	        </a>
+	    </h1>
+	</ion-nav-title>
+    
+	<ion-nav-buttons  side="right">
+	    <button class="button button-clear" ng-click="toggleArchive()">
+	       <i ng-if="toggle" class="icon ion-arrow-up-c"></i>
+	       <i ng-if="!toggle" class="icon ion-arrow-down-c"></i>
+	    </button>
+	</ion-nav-buttons>  
+    
+	<ion-content>
+	<div class="list">
+	  <label ng-if="!toggle" class="item item-input item-stacked-label">
+	    <span class="input-label">{{category.label}}</span>
+	    <input type="text" ng-model="category.newItem" placeholder="{{category.example}}">
+	  </label>
+	</div>
+	  <div class="padding">
+	  	<button ng-if="!toggle" ng-click="add(category.newItem)"class="button  button-block button-positive">
+	        Save
+	   </button>
+	  </div>
+
+	<div class="list card" ng-repeat="item in list.slice().reverse() | filter : {archive:toggle}">
+	  <div class="item item-text-wrap">
+	    <h2>{{item.name}}</h2>
+	    <p>{{item.timestamp | date :'MMMM d, yyyy h:mm a'}}</p>
+	  </div>
+	  <div class="item tabs tabs-secondary tabs-icon-left">
+	    <a class="tab-item" href="#" ng-click="confirmEdit(item)">
+	      <i class="icon ion-edit"></i>
+	      Edit
+	    </a>
+	    <a class="tab-item" href="#" ng-if="!toggle" ng-click="confirmArchive(item)">
+	      <i class="icon ion-arrow-down-c"></i>
+	      Archive
+	    </a>
+	    <a class="tab-item" href="#" ng-if="toggle" ng-click="confirmUnarchive(item)">
+	      <i class="icon ion-arrow-up-c"></i>
+	      Unarchive
+	    </a>
+	    <a class="tab-item" href="#" ng-click="confirmDelete(item)">
+	      <i class="icon ion-trash-b"></i>
+	      Delete
+	    </a>
+	  </div>
+	</div>
+	</ion-content>
+</ion-view>
